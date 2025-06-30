@@ -5,10 +5,26 @@ module.exports = {
 		.setName('leaderboard')
 		.setDescription('its a leaderboard c:'),
 	async execute(interaction) {
-		// interaction.user is the object representing the User who ran the command
-		// interaction.member is the GuildMember object, which represents the user in the specific guild
-        console.log("Command Sended in " + interaction.guild.id);
-		console.log("Command sended by " + interaction.user.id);
-		await interaction.reply(`NOT IMPLEMENTED YET`);
+		console.log('Executing Leaderboard');
+		await interaction.reply(`leaderboard NOT IMPLEMENTED YET`);
+	// Obtener la lista de miembros del servidor
+    const guild = interaction.guild;
+    try {
+      // Asegurarse de que la lista de miembros esté cargada
+      await guild.members.fetch(); // Esto carga todos los miembros del servidor
+      const members = guild.members.cache;
+		console.log(memberList);
+      // Crear una lista de nombres de usuario (o IDs, según prefieras)
+      const memberList = members.map(member => {
+        const username = member.user.tag; // Formato: Nombre#Discriminador
+        const userId = member.user.id;
+        return `${username} (ID: ${userId})`;
+      });
+	  console.log(memberList);
+    } catch (error) {
+      console.error('Error al obtener miembros:', error);
+    }
+		
+		await interaction.reply(`leaderboard NOT IMPLEMENTED YET`);
 	},
 };

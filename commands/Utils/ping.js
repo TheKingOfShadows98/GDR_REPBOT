@@ -5,9 +5,12 @@ module.exports = {
 		.setName('ping')
 		.setDescription('PingPong'),
 	async execute(interaction) {
-		// interaction.user is the object representing the User who ran the command
-		// interaction.member is the GuildMember object, which represents the user in the specific guild
+		let message = `Tu perfil:${interaction.user.id} , in ${interaction.guild.id}`;
+		// Responder con un mensaje efímero
+		await interaction.reply({
+		content: message,
+		ephemeral: true, // Esto hace que el mensaje sea solo visible para el usuario
+		});
         console.log("executed command");
-		await interaction.reply(`pong.`);
 	},
 };
