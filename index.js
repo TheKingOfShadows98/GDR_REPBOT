@@ -1,7 +1,11 @@
+import postgres from 'postgres';
 const { Client, Collection, Events, GatewayIntentBits,IntentsBitField, MessageFlags } = require('discord.js');
 require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
+
+// Option 1: Using an environment variable (recommended)
+const db = postgres(process.env.DATABASE_URL);
 
 const client = new Client({
   intents: [
@@ -62,6 +66,15 @@ client.on(Events.InteractionCreate, async interaction => {
 client.on('ready', (e) => {
   console.log(`Bot conectado como ${client.user.tag}`);
 });
+
+async function test_createTable(){
+        const response = await db`
+    CREATE TABLE TEST (
+id int NOT NULL PRIMARY KEY AUTO INCREMENT
+)`;
+    return response;
+}
+(test_createTable())();
 
 // LOGIN BOT
 client.login(process.env.DISCORD_TOKEN);
