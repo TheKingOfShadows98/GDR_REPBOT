@@ -1,6 +1,13 @@
 import postgres from 'postgres';
+import 'dotenv/config';
 
-// Option 1: Using an environment variable (recommended)
-const db = postgres(process.env.DATABASE_URL);
+// Configuración de la conexión a la base de datos PostgreSQL
+const sql = postgres({
+  host: process.env.DATABASE_HOST,
+  database: process.env.DATABASE_NAME,
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  ssl: 'require'
+});
 
-export default db;
+export default sql;
