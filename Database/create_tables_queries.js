@@ -1,4 +1,4 @@
-import dataBase from "./dataBase";
+import {dataBase} from "./dataBase.js";
 
 
 
@@ -26,7 +26,7 @@ export async function create_userTable(server_id){
 export async function create_roleTable(server_id){
     const response = await dataBase`
     CREATE TABLE ${server_id}_Roles(
-    id int NOT NULL PRIMARY KEY AUTO_INCREMENT
+    id SERIAL NOT NULL PRIMARY KEY,
     server_id int NOT NULL,
     role_id int NOT NULL,
     credits_rewarded int
@@ -38,7 +38,7 @@ export async function create_roleTable(server_id){
 export async function create_special_rewards_Table(server_id){
     const response = await dataBase`
     CREATE TABLE ${server_id}_special_rewards (
-    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL NOT NULL PRIMARY KEY,
     server_id int NOT NULL,
     is_persistant bool NOT NULL,
     credits_rewarded int)
@@ -47,21 +47,13 @@ export async function create_special_rewards_Table(server_id){
 }
 
 // CREATE TABLE OF LOGS
-export async function create_special_rewards_Table(server_id){
+export async function create_logs_Table(server_id){
     const response = await dataBase`
     CREATE TABLE ${server_id}_Logs (
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+id SERIAL NOT NULL PRIMARY KEY ,
 action varchar(255),
 author_id int NOT NULL,
 description varchar(255)
-)`;
-    return response;
-}
-
-export async function test_createTable(){
-        const response = await dataBase`
-    CREATE TABLE TEST (
-id int NOT NULL PRIMARY KEY AUTO_INCREMENT
 )`;
     return response;
 }

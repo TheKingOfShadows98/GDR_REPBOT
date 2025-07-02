@@ -10,4 +10,4 @@ const dataBase = postgres({
   ssl: 'require'
 });
 
-export default dataBase;
+export {dataBase};
