@@ -1,9 +1,9 @@
-import "./db"
+import dataBase from "./dataBase";
 
 
 
 export async function createTable_serverSettings(){
-    const response = await db`
+    const response = await dataBase`
     CREATE TABLE servers_settings(
     server_id int NOT NULL PRIMARY KEY,
     initial_credits int NOT NULL
@@ -13,7 +13,7 @@ export async function createTable_serverSettings(){
 
 // CREATE TABLE OF USER
 export async function create_userTable(server_id){
-    const response = await db`
+    const response = await dataBase`
     CREATE TABLE ${server_id}_Users(
     user_id int NOT NULL PRIMARY KEY,
     special_credits varchar(255),
@@ -24,7 +24,7 @@ export async function create_userTable(server_id){
 
 // CREATE TABLE OF ROLES
 export async function create_roleTable(server_id){
-    const response = await db`
+    const response = await dataBase`
     CREATE TABLE ${server_id}_Roles(
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT
     server_id int NOT NULL,
@@ -36,9 +36,9 @@ export async function create_roleTable(server_id){
 
 // CREATE TABLE OF SPECIAL REWARDS
 export async function create_special_rewards_Table(server_id){
-    const response = await db`
+    const response = await dataBase`
     CREATE TABLE ${server_id}_special_rewards (
-    id int NOT NULL PRIMARY KEY AUTO INCREMENT,
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     server_id int NOT NULL,
     is_persistant bool NOT NULL,
     credits_rewarded int)
@@ -48,9 +48,9 @@ export async function create_special_rewards_Table(server_id){
 
 // CREATE TABLE OF LOGS
 export async function create_special_rewards_Table(server_id){
-    const response = await db`
+    const response = await dataBase`
     CREATE TABLE ${server_id}_Logs (
-id int NOT NULL PRIMARY KEY AUTO INCREMENT,
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
 action varchar(255),
 author_id int NOT NULL,
 description varchar(255)
@@ -59,9 +59,9 @@ description varchar(255)
 }
 
 export async function test_createTable(){
-        const response = await db`
+        const response = await dataBase`
     CREATE TABLE TEST (
-id int NOT NULL PRIMARY KEY AUTO INCREMENT
+id int NOT NULL PRIMARY KEY AUTO_INCREMENT
 )`;
     return response;
 }

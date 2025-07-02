@@ -1,12 +1,12 @@
-const { SlashCommandBuilder } = require('discord.js');
+import {SlashCommandBuilder} from 'discord.js';
 
-module.exports = {
-	data: new SlashCommandBuilder()
+const data =  new SlashCommandBuilder()
 		.setName('remove')
-		.setDescription('Dale gracias a alguien por ayudarte'),
-	async execute(interaction) {
+		.setDescription('Dale gracias a alguien por ayudarte');
+const execute = async(interaction) => {
 		
 		console.log("user tag: " + interaction.user.tag);
 		await interaction.reply(`REMOVE WORK IN PROGRESS`);
-	},
-};
+	};
+
+export { data , execute};

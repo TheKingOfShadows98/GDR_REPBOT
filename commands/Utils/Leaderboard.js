@@ -1,10 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
+import {SlashCommandBuilder} from 'discord.js';
 
-module.exports = {
-	data: new SlashCommandBuilder()
+const data =  new SlashCommandBuilder()
 		.setName('leaderboard')
-		.setDescription('its a leaderboard c:'),
-	async execute(interaction) {
+		.setDescription('its a leaderboard c:');
+    
+const execute = async(interaction) => {
 		console.log('Executing Leaderboard');
 		await interaction.reply(`leaderboard NOT IMPLEMENTED YET`);
 	// Obtener la lista de miembros del servidor
@@ -26,5 +26,6 @@ module.exports = {
     }
 		
 		await interaction.reply(`leaderboard NOT IMPLEMENTED YET`);
-	},
-};
+	};
+
+export { data , execute};

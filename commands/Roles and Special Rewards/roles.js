@@ -1,11 +1,11 @@
-const { SlashCommandBuilder } = require('discord.js');
+import {SlashCommandBuilder} from 'discord.js';
 
-module.exports = {
-	data: new SlashCommandBuilder()
+const data = new SlashCommandBuilder()
 		.setName('roles')
-		.setDescription('visualiza todos los roles que tienen recompenzas'),
-	async execute(interaction) {
+		.setDescription('visualiza todos los roles que tienen recompenzas');
+const execute = async(interaction) => {
 		
 		await interaction.reply(`ROLES WORK IN PROGRESS`);
-	},
-};
+	};
+
+export { data , execute};

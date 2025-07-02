@@ -1,12 +1,13 @@
-const { SlashCommandBuilder } = require('discord.js');
+import {SlashCommandBuilder} from 'discord.js';
 
-module.exports = {
-	data: new SlashCommandBuilder()
+const data = new SlashCommandBuilder()
 		.setName('credits')
-		.setDescription('Usalo para ver tus creditos actuales'),
-	async execute(interaction) {
+		.setDescription('Usalo para ver tus creditos actuales');
+		
+const execute = async(interaction) => {
 		
 		console.log("user tag: " + interaction.user.tag);
 		await interaction.reply(`CREDITS WORK IN PROGRESS`);
-	},
-};
+	};
+
+export { data , execute};
