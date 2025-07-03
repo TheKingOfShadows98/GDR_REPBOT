@@ -1,37 +1,31 @@
-const { REST, Routes } = import('discord.js');
-const fs = import('node:fs');
-const path = import('node:path');
+import { REST, Routes } from "discord.js";
+
 import dotenv from 'dotenv';
 dotenv.config()
 const commands = [];
+
+import { scan_commands } from '../utilities.js';
+
+
 // Grab all the command folders from the commands directory you created earlier
-const foldersPath = path.join(__dirname, 'commands');
-const commandFolders = fs.readdirSync(foldersPath);
-
-
-// 
-for (const folder of commandFolders) {
-	// Grab all the command files from the commands directory you created earlier
-	const commandsPath = path.join(foldersPath, folder);
-	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-	// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-	for (const file of commandFiles) {
-		const filePath = path.join(commandsPath, file);
-		try{
-			console.log(`trying import filePath`)
-			const command = import(filePath);
-			if ('data' in command && 'execute' in command) {
-				commands.push(command.data.toJSON());
-			} else {
-				console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-			}
+async function command_handler(data, execute){
+	try
+	{
+		if (data && execute) {
+			commands.push(data.toJSON());
 		}
-		catch(error){
-			console.log(error);
+		else
+		{
+			console.log(`[WARNING] The command is missing a required "data" or "execute" property.`);
 		}
+	}
+	catch(error)
+	{
+		console.log(error);
 	}
 }
 
+await scan_commands(command_handler);
 
 
 // Construct and prepare an instance of the REST module
