@@ -1,12 +1,21 @@
 import {SlashCommandBuilder} from 'discord.js';
+import { add_newLog } from '../../Database/logs_queries.js';
+import { reset_credits } from '../../Database/credits_queries.js';
 
 const data = new SlashCommandBuilder()
 		.setName('reset')
-		.setDescription('Dale gracias a alguien por ayudarte');
+		.setDescription('set a user zero additional credits')
+		.addUserOption(option => option.setName('user').setDescription('target user').setRequired(true))
 const execute = async(interaction) => {
 		
-		console.log("user tag: " + interaction.user.tag);
-		await interaction.reply(`RESET WORK IN PROGRESS`);
+		const user_target = interaction.options.getUser('user');
+		const server_id = interaction.guild.id;
+		const author_id = interaction.user.id;
+		// REMOVE CREDITS
+		await reset_credits(server_id, user_target.id);
+		await interaction.reply(`RESETTED CREDITS OF ${user_target.username}`);
+		// SEND LOG
+		await add_newLog(server_id , interaction.user.id , `${author_id} SET TO ZERO ADDITIONAL CREDITS TO ${user_target.id}`);
 	};
 
 export { data , execute};

@@ -17,4 +17,10 @@ const scan_commands = async (command_callback) => {
     }
 }
 
+export function getCurrentTimestamp() {
+  const now = new Date();
+  // Format: YYYY-MM-DD HH:MM:SS
+  return now.toISOString().replace('T', ' ').split('.')[0];
+}
+
 export {scan_commands};

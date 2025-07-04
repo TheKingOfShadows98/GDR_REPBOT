@@ -1,5 +1,6 @@
 import { dataBase } from "./dataBase.js";
 
+
 export async function createTable_serverSettings(){
     const response = await dataBase`
     CREATE TABLE servers_settings(
@@ -10,17 +11,15 @@ export async function createTable_serverSettings(){
     return response;
 }
 
-export async function add_settings(server_id,data){
-
-    const table_exist = await exist_table()
-    if(!table_exist) await createTable_serverSettings();
-
+export async function add_settings(server_id,author_id,data){
+    
     const response = await dataBase
     `
         INSERT INTO servers_settings (server_id, initial_credits)
         VALUES (${server_id}, ${data.initial_credits})
         RETURNING *
     `;
+    
     return response;
 }
 
@@ -45,7 +44,6 @@ async function exist_table() {
         WHERE table_name = 'servers_settings'
       ) AS table_exists
     `;
-    console.log("Server Settigns added correctly");
     return result[0].table_exists;
   } catch (error) {
     console.error('Error checking if servers_settings table exists:', error);
@@ -74,22 +72,25 @@ async function exist_settings(server_id) {
     }
 }
 
-export async function set_settings(server_id, data){
+export async function set_settings(server_id, author_id, data){
+
     const table_exist = await exist_table()
     if(!table_exist) await createTable_serverSettings();
-
     const exist = await exist_settings(server_id);
     if(!exist){
-        return add_settings(server_id, data);
+        return add_settings(server_id,author_id, data);
     }
+    else {
     const result = await dataBase
     `
         UPDATE servers_settings
-        SET initial_credits = ${data.initial_credits}
+        SET 
+        initial_credits = ${data.initial_credits}
         WHERE server_id = ${server_id}
         RETURNING *
     `;
     console.log("Server Settigns changed correctly");
     return result;
+    }
 }
 

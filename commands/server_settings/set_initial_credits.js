@@ -1,5 +1,7 @@
 import {SlashCommandBuilder} from 'discord.js';
-import { get_settings ,set_settings} from '../../Database/server_settings_queries.js';
+import { set_settings} from '../../Database/server_settings_queries.js';
+import { add_newLog } from '../../Database/logs_queries.js';
+
 const data = new SlashCommandBuilder()
 		.setName('set_initial_credits')
 		.setDescription('Dale gracias a alguien por ayudarte')
@@ -13,11 +15,12 @@ const data = new SlashCommandBuilder()
 const execute = async(interaction) => {
 		// build Settings
 		const settings = {}
+		console.log(`[${interaction.guild.id}]: [${interaction.user.id}] run Set Initial Credits`);
 		settings.initial_credits = interaction.options.getInteger('credits');
+		await set_settings(interaction.guild.id, interaction.user.id, settings);
+		interaction.reply(`SET INITIAL CREDITS TO ${settings.initial_credits}`);
+		await add_newLog(interaction.guild.id, interaction.user.id, `SET INITIAL CREDITS TO ${settings.initial_credits}`);
 		
-		await set_settings(interaction.guild.id , settings)
-		console.log("user tag: " + interaction.user.tag);
-		await interaction.reply(`SET INITIAL CREDITS TO ${settings.initial_credits}`);
 	};
 
 export { data , execute};

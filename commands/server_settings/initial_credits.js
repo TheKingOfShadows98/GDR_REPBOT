@@ -9,6 +9,10 @@ const execute = async(interaction) => {
         const settings =  await get_settings(interaction.guild.id);
         // indicar a discord que la respuesta va a tomar mas tiempo.
         //await interaction.deferReply({ ephemeral: true });
+        if(settings === undefined){
+                await interaction.reply(`INITIAL CREDITS NOT SETTED`);
+                return;
+        }
         await interaction.reply(`INITIAL CREDITS: ${settings.initial_credits}`);
     };
 
