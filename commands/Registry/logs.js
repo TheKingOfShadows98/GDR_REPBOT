@@ -6,16 +6,16 @@ const data = new SlashCommandBuilder()
 		.setDescription('show last 10 actions');
 		
 const execute = async(interaction) => {
+	await interaction.deferReply();
 		const server_id = interaction.guild.id;
-
 		const logs = await get_logs(server_id);
 
-		const message = "";
+		let message = "";
 		logs.forEach(log => {
-			message += `${log} \n`;
+			message += `[${log.time_stamp}] > User [${log.author_id}] ${log.action} \n \n`;
 		});
-
-		await interaction.reply(message);
+		
+		await interaction.editReply(message);
 	};
 
 export { data , execute};

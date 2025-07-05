@@ -6,18 +6,19 @@ const data = new SlashCommandBuilder()
 		.setDescription('Usalo para ver tus creditos actuales');
 		
 const execute = async(interaction) => {
-	
+		await interaction.deferReply();
 		const server_id = interaction.guild.id;
 		const user_id = interaction.user.id;
 		// PETICION A LA BASE DE DATOS DE LOS CREDITOS.
 		const res = await get_credits(server_id,user_id);
+			
 		// COMPROBACION SI NO ES NULA
-		if(res == undefined){
-			await interaction.reply(`NO HAVE CREDITS`);
+		if(res > 0){
+			await interaction.editReply(`NO HAVE CREDITS`);
 			return;
 		}
-		console.log("user tag: " + interaction.user.tag);
-		await interaction.reply(`YOUR ADDITIONAL CREDITS: ${res.additional_credits}`);
+		console.log(res[0].aditional_credits);
+		await interaction.editReply(`YOUR ADDITIONAL CREDITS: ${res[0].aditional_credits}`);
 	};
 
 export { data , execute};

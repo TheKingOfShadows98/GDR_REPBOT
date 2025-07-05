@@ -30,20 +30,19 @@ async function exist_table() {
   }
 }
 
-async function validateTable(){
+export async function validate_logs_Table(){
     const exist = await exist_table();
     console.log(`> VALIDATING IF logs TABLE EXIST `)
-    if( ! exist ){
+    if( !exist ){
         console.log(`! logs TABLE NOT EXIST !`)
         await create_logs_Table();
     }
-
+    console.log('logs TABLE EXIST');
 }
 
 export async function add_newLog(server_id,  author_id, log){
 
     
-    await validateTable();
     const response = await dataBase`
     INSERT INTO logs (action, author_id, server_id, time_stamp) 
     VALUES (${log}, ${author_id}, ${server_id}, CURRENT_TIMESTAMP)
@@ -54,15 +53,14 @@ export async function add_newLog(server_id,  author_id, log){
 
 export async function get_logs(server_id){
     
-    await validateTable();
-
+    
     const response = await dataBase`
     SELECT action, author_id, time_stamp FROM logs
     WHERE server_id = ${server_id}
     ORDER BY time_stamp DESC 
     LIMIT 10
     `;
-    console.log(response);
+    console.log('> REQUESTED 10 LAST LOGS');
     return response;
 
 }

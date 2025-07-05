@@ -72,10 +72,15 @@ async function exist_settings(server_id) {
     }
 }
 
-export async function set_settings(server_id, author_id, data){
-
+export async function validate_servers_Table() {
     const table_exist = await exist_table()
     if(!table_exist) await createTable_serverSettings();
+    console.log('servers_settigns EXIST');
+}
+
+
+
+export async function set_settings(server_id, author_id, data){
     const exist = await exist_settings(server_id);
     if(!exist){
         return add_settings(server_id,author_id, data);

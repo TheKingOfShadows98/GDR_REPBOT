@@ -9,16 +9,17 @@ const data =  new SlashCommandBuilder()
 		.addIntegerOption(option => option.setName('amount').setDescription('amount of credits').setMinValue(0).setRequired(true))
 		;
 const execute = async(interaction) => {
-
-			const credits = interaction.options.getInteger('amount');
-			const user_target = interaction.options.getUser('user');
-			const server_id = interaction.guild.id;
-			const author_id = interaction.user.id;
-			// REMOVE CREDITS
-			await remove_credits(server_id, user_target.id, credits);
-			await interaction.reply(`REMOVED ${credits} TO ${user_target.username}`);
-			// SEND LOG
-			await add_newLog(server_id , interaction.user.id , `${author_id} REMOVE ${credits} credits TO ${user_target.id}`);
+		await interaction.deferReply();
+		const credits = interaction.options.getInteger('amount');
+		const user_target = interaction.options.getUser('user');
+		const server_id = interaction.guild.id;
+		const author_id = interaction.user.id;
+		
+		// REMOVE CREDITS
+		await remove_credits(server_id, user_target.id, credits);			
+		await interaction.editReply(`REMOVED ${credits} TO ${user_target.username}`);
+		// SEND LOG
+		await add_newLog(server_id , interaction.user.id , `${author_id} REMOVE ${credits} credits TO ${user_target.id}`);
 	};
 
 export { data , execute};
