@@ -51,15 +51,12 @@ async function exist_role(server_id, role_id){
 
 export async function add_role(server_id, role_id, role_name, reward){
     try {
-        const exist = exist_role(server_id,role_id);
-        if(exist){
-            return (false, "ROLE ALREADY EXIST");
-        }
         const query = await dataBase`
         INSERT INTO roles (server_id, role_id, role_name, credits)
         VALUES (${server_id},${role_id},${role_name},${reward})
         `;
-        console.log('> ROLE INSERTED');
+        console.log(query);
+        console.log('> ROLE ADDED');
         return (true, "ROLE CREATED SUCCESSFULLY");
     } catch (error) {
         console.log(error);
@@ -72,7 +69,7 @@ export async function set_role_reward(server_id, role_id, role_name, reward){
         const exist = await exist_role(server_id,role_id);
         if(!exist){
             await add_role(server_id, role_id, role_name, reward);
-            return (true , "ROLE SET CORRECTLY");
+            return {confirm: true,  message:"ROLE SET CORRECTLY"};
         }
         const query = await dataBase`
         UPDATE INTO roles
@@ -80,10 +77,10 @@ export async function set_role_reward(server_id, role_id, role_name, reward){
         WHERE server_id = ${server_id} AND role_id = ${role_id}
         `;
         console.log('> ROLE MODIFIED');
-        return (true, "ROLE MODIFIED SUCCESSFULLY");
+        return {confirm: true,  message:"ROLE MODIFIED SUCCESSFULLY"};
     } catch (error) {
         console.log(error);
-        return (false, "SOMETHING WAS WRONG");
+        return {confirm: false,  message:"SOMETHING WAS WRONG"};
     }
 
 }
@@ -99,10 +96,11 @@ export async function remove_role(server_id, role_id){
         WHERE server_id = ${server_id} AND role_id = ${role_id}
         `;
         console.log('> ROLE REMOVED');
-        return (true, "ROLE REMOVED");
+        return {confirm: true,  message:"ROLE REMOVED"};
+       
     } catch (error) {
         console.log(error);
-        return (false, "SOMETHING WAS WRONG");
+        return {confirm: false, message: "SOMETHING WAS WRONG"};
     }
 
 }
@@ -114,7 +112,7 @@ export async function get_roles(server_id){
         WHERE server_id = ${server_id}
         `
         console.log('> GET ALL ROLES');
-        return (true, query);
+        return {confirm: true, message: query};
         
     } catch (error) {
         console.log(error);

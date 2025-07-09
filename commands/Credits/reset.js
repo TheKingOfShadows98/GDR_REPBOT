@@ -15,7 +15,7 @@ const execute = async(interaction) => {
 		await reset_credits(server_id, user_target.id);
 		await interaction.editReply(`RESETTED CREDITS OF ${user_target.username}`);
 		// SEND LOG
-		await add_newLog(server_id , interaction.user.id , `${author_id} SET TO ZERO ADDITIONAL CREDITS TO ${user_target.id}`);
+		await add_newLog(server_id , `resetted credits to `, author_id ,user_target.id, 'USER');
 	};
 
 export { data , execute};

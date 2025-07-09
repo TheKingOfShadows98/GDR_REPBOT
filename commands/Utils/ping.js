@@ -1,17 +1,23 @@
 import {SlashCommandBuilder} from 'discord.js';
+import { get_user } from '../../index.js';
+import { createEmbed } from '../../utilities.js';
 
 const data =  new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('PingPong');
 const execute = async(interaction) => {
-		let message = `Tu perfil:${interaction.user.id} , in ${interaction.guild.id}`;
-		// Responder con un mensaje efímero
-		await interaction.reply({
-		content: message,
-		ephemeral: true, // Esto hace que el mensaje sea solo visible para el usuario
+		
+		const embed = createEmbed({
+			title:"PING PONG",
+			description:"ESTE ES UN PING PONG",
+			fields:[
+				{ name: 'Miembros', value: `${interaction.guild.memberCount}`},
+				{ name: 'Creado el', value: `${interaction.guild.createdAt.toDateString()}`},
+			],
+			color: '#00ff00'
 		});
-        console.log("executed command");
+		interaction.reply({embeds: [embed] } );
 	};
-
+	
 
 export { data , execute};

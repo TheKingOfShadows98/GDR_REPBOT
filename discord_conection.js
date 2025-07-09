@@ -1,4 +1,4 @@
-import { Client, Collection, Events, IntentsBitField, MessageFlags } from 'discord.js';
+import { Client, Collection, Events, IntentsBitField, GatewayIntentBits, MessageFlags } from 'discord.js';
 import dotenv from 'dotenv';
 import { scan_commands } from './utilities.js';
 
@@ -9,8 +9,10 @@ const setupClient = () =>
   const client = new Client({
     intents: [
       IntentsBitField.Flags.Guilds,
+      GatewayIntentBits.Guilds, // Necesario para acceder a información del servidor
+      GatewayIntentBits.GuildMembers, // Necesario para acceder a información de los miembros
       IntentsBitField.Flags.GuildMessages,
-      IntentsBitField.Flags.MessageContent,
+      IntentsBitField.Flags.MessageContent
     ],
   });
 
@@ -22,6 +24,8 @@ const setupClient = () =>
       console.log(`[WARNING] The command is missing a required "data" or "execute" property.`);
     }
   }
+
+  
 
   scan_commands(command_handler);
 

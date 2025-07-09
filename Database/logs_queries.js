@@ -2,12 +2,13 @@ import { dataBase } from "./dataBase.js";
 // CREATE TABLE OF LOGS
 export async function create_logs_Table(){
     
-    console.log(result);
     const response = await dataBase`
     CREATE TABLE logs (
     id SERIAL NOT NULL PRIMARY KEY ,
     action varchar(255) NOT NULL,
     author_id varchar(255) NOT NULL,
+    target_id varchar(255),
+    target_type varchar(10),
     server_id varchar(255) NOT NULL,
     time_stamp TIMESTAMP NOT NULL
     )`;
@@ -40,12 +41,12 @@ export async function validate_logs_Table(){
     console.log('logs TABLE EXIST');
 }
 
-export async function add_newLog(server_id,  author_id, log){
+export async function add_newLog(server_id, log,author_id,target_id, target_type){
 
     
     const response = await dataBase`
-    INSERT INTO logs (action, author_id, server_id, time_stamp) 
-    VALUES (${log}, ${author_id}, ${server_id}, CURRENT_TIMESTAMP)
+    INSERT INTO logs (action, author_id, server_id, target_id, target_type, time_stamp) 
+    VALUES (${log}, ${author_id}, ${server_id}, ${target_id}, ${target_type}, CURRENT_TIMESTAMP)
     `;
     console.log('> ADDED LOG TO REGISTRY');
     return response;
@@ -55,7 +56,7 @@ export async function get_logs(server_id){
     
     
     const response = await dataBase`
-    SELECT action, author_id, time_stamp FROM logs
+    SELECT action, author_id, target_id, target_type, time_stamp FROM logs
     WHERE server_id = ${server_id}
     ORDER BY time_stamp DESC 
     LIMIT 10

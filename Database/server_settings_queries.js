@@ -30,8 +30,6 @@ export async function get_settings(server_id){
     FROM servers_settings 
     WHERE server_id = ${server_id}
     `;
-    
-    console.log(response[0]);
     return response[0];
 
 }

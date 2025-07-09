@@ -19,7 +19,7 @@ const execute = async(interaction) => {
 		await remove_credits(server_id, user_target.id, credits);			
 		await interaction.editReply(`REMOVED ${credits} TO ${user_target.username}`);
 		// SEND LOG
-		await add_newLog(server_id , interaction.user.id , `${author_id} REMOVE ${credits} credits TO ${user_target.id}`);
+		await add_newLog(server_id , `removed ${credits} credits to `, author_id ,user_target.id, 'USER');
 	};
 
 export { data , execute};

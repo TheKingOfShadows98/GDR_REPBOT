@@ -19,7 +19,7 @@ const execute = async(interaction) => {
 	const author_id = interaction.user.id;
 	await add_credits(server_id, user_target.id, credits);
 	await interaction.editReply(`ADDED ${credits} to ${user_target.username}`);
-	await add_newLog(server_id , interaction.user.id , `${author_id} give ${credits} credits to ${user_target.id}`);
+	await add_newLog(server_id , `give ${credits} credits to `, author_id ,user_target.id, 'USER');
 };
 
 

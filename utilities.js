@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { EmbedBuilder } from 'discord.js';
 
 const scan_commands = async (command_callback) => {
     const foldersPath = path.join('./commands');
@@ -24,3 +25,28 @@ export function getCurrentTimestamp() {
 }
 
 export {scan_commands};
+
+
+
+/**
+ * Crea un embed personalizado para respuestas del bot
+ * @param {string} title - Título del embed
+ * @param {string} description - Descripción del embed
+ * @param {Array<{name: string, value: string, inline?: boolean}>} fields - Campos del embed
+ * @param {string} color - Color en formato hexadecimal (opcional)
+ * @returns {EmbedBuilder} - Embed listo para enviar
+ */
+export function createEmbed({ title, description, fields = [], color = '#0099ff' }) {
+  const embed = new EmbedBuilder()
+    .setTitle(title)
+    .setDescription(description)
+    .setColor(color)
+    .setTimestamp()
+    .setFooter({ text: 'Bot creado por GDR_REPBOT' });
+
+  if (fields.length > 0) {
+    embed.addFields(fields);
+  }
+
+  return embed;
+}

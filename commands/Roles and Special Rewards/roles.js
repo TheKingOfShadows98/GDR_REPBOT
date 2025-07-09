@@ -1,5 +1,6 @@
 import {SlashCommandBuilder} from 'discord.js';
 import { get_roles } from '../../Database/roles_queries.js';
+import { get_role } from '../../index.js';
 
 const data = new SlashCommandBuilder()
 		.setName('roles')
@@ -9,10 +10,16 @@ const execute = async(interaction) => {
 	const server_id = interaction.guild.id;
 
 	const query = await get_roles(server_id);
-	console.log(query);
+	
+	let message = 'ROLES WITH CREDIT REWARD:\n'
 
-
-	await interaction.editReply(`ADD_ROLE WORK IN PROGRESS`);
+	for (let index = 0; index < query.message.length; index++) {
+		const element = query.message[index];
+		const roleData = await get_role(server_id, element.role_id);
+		message += `@${roleData.name} with ${element.credits}`
+		console.log(message);
+	}
+	await interaction.editReply(message);
 };
 		
 export { data , execute};

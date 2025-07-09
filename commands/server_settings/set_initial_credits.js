@@ -19,7 +19,7 @@ const execute = async(interaction) => {
 		settings.initial_credits = interaction.options.getInteger('credits');
 		await set_settings(interaction.guild.id, interaction.user.id, settings);
 		interaction.reply(`SET INITIAL CREDITS TO ${settings.initial_credits}`);
-		await add_newLog(interaction.guild.id, interaction.user.id, `SET INITIAL CREDITS TO ${settings.initial_credits}`);
+		await add_newLog(interaction.guild.id, `SET INITIAL CREDITS TO ${settings.initial_credits}`, interaction.user.id, 'none', 'none');
 		
 	};
 
