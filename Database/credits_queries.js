@@ -40,6 +40,15 @@ export async function validate_users_Table(){
     console.log(`> user_credits TABLE EXIST `)
 }
 
+export async function get_all_credits(server_id){
+    const response = await dataBase`
+    SELECT server_id, user_id, aditional_credits FROM user_credits
+    WHERE
+    server_id = ${server_id}
+    `;
+    return response;
+}
+
 export async function get_credits(server_id ,user_id){
     
     console.log(`> SELECTING USERS WITH ${server_id}, ${user_id}`);
@@ -60,7 +69,8 @@ async function exist_credits(server_id, user_id){
     server_id = ${server_id} AND user_id = ${user_id}
     LIMIT 1
     `;
-    return response > 0;
+    console.log(response);
+    return response.length > 0;
 }
 
 async function insert_credits(server_id, user_id, amount){
@@ -78,8 +88,9 @@ export async function add_credits(server_id, user_id, amount){
     
     try {
         const exist = await exist_credits(server_id, user_id);
+        console.log(exist);
         if(!exist){
-            insert_credits(server_id, user_id,amount);
+            return insert_credits(server_id, user_id,amount);
         }
         const response = await dataBase`
         UPDATE user_credits 

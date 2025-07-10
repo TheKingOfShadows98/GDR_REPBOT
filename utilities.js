@@ -42,7 +42,7 @@ export function createEmbed({ title, description, fields = [], color = '#0099ff'
     .setDescription(description)
     .setColor(color)
     .setTimestamp()
-    .setFooter({ text: 'Bot creado por GDR_REPBOT' });
+    .setFooter({ text: 'powered by @ZAndy' });
 
   if (fields.length > 0) {
     embed.addFields(fields);

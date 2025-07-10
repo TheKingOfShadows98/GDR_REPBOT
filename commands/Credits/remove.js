@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { add_newLog } from '../../Database/logs_queries.js';
 import { remove_credits } from '../../Database/credits_queries.js';
 
@@ -7,6 +7,7 @@ const data =  new SlashCommandBuilder()
 		.setDescription('REMOVE THE AMOUNT OF ADDITIONAL CREDITS TO A USER IF IS NEGATIVE, SET ZERO')
 		.addUserOption(option => option.setName('user').setDescription('target user').setRequired(true))
 		.addIntegerOption(option => option.setName('amount').setDescription('amount of credits').setMinValue(0).setRequired(true))
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		;
 const execute = async(interaction) => {
 		await interaction.deferReply();

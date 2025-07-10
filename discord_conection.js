@@ -52,6 +52,31 @@ const setupClient = () =>
     console.log(`Bot conectado como ${client.user.tag}`);
   });
 
+  client.on('messageCreate', message => {
+    // Check if the message is from a bot to avoid bot互相回应.
+    if (message.author.bot) return;
+
+    // Check for a specific command or keyword.
+    if (message.content === '!ping') {
+    }
+
+  });
+  client.on('voiceStateUpdate', (oldState, newState) => {
+    const oldChannel = oldState.channel;
+    const newChannel = newState.channel;
+    console.log('voiceStateUpdate');
+    if (oldChannel !== newChannel) {
+      if (newChannel) {
+        console.log(`${newState.member.user.tag} joined ${newChannel.name}`);
+        // Perform actions when a user joins a channel
+      } else {
+        console.log(`${oldState.member.user.tag} left ${oldChannel.name}`);
+        // Perform actions when a user leaves a channel
+      }
+    }
+
+  });
+
   return client;
 }
 

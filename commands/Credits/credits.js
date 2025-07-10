@@ -5,6 +5,7 @@ import { get_settings } from '../../Database/server_settings_queries.js';
 import { get_roles } from '../../Database/roles_queries.js';
 import { createEmbed } from '../../utilities.js';
 
+
 const data = new SlashCommandBuilder()
 		.setName('credits')
 		.setDescription('Usalo para ver tus creditos actuales');
@@ -40,18 +41,22 @@ const execute = async(interaction) => {
 			});
 			total += res[0].aditional_credits;
 		}
-
+		const role_field_name = `📜 Role Rewards 📜`;
+		let role_field_value =``;
 		if(roles.length > 0){
 			for (let i = 0; i < roles.length; i++) {
 				const role = roles[i];
-				fields.push({
-				name: `📜 ${role.name} Reward 📜`,
-				value:`+${role.credits}`,
-				inline: false
-				});
+				
+				role_field_value += `${role.name}: +${role.credits} \n`;
+				
 				total += role.credits;
 			}
 		}
+		fields.push({
+				name: `${role_field_name}`,
+				value:`${role_field_value}`,
+				inline: false
+				});
 
 		fields.push({
 		name: '🎉 total 🎉',

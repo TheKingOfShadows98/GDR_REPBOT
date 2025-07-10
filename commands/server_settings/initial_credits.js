@@ -1,8 +1,9 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { get_settings} from '../../Database/server_settings_queries.js';
 const data = new SlashCommandBuilder()
         .setName('initial_credits')
         .setDescription('Dale gracias a alguien por ayudarte')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         ;
 const execute = async(interaction) => {
         // build Settings

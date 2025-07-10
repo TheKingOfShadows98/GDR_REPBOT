@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { get_logs } from "../../Database/logs_queries.js";
 import { get_user } from '../../index.js';
 import { get_role } from '../../index.js';
@@ -6,7 +6,8 @@ import { get_role } from '../../index.js';
 
 const data = new SlashCommandBuilder()
 		.setName('logs')
-		.setDescription('show last 10 actions');
+		.setDescription('show last 10 actions')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 		
 const execute = async(interaction) => {
 	await interaction.deferReply();

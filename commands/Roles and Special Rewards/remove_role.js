@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { remove_role } from '../../Database/roles_queries.js';
 
 const data = new SlashCommandBuilder()
@@ -9,6 +9,7 @@ const data = new SlashCommandBuilder()
 					.setDescription('role to erase')
 					.setRequired(true) // Or false if the option is not required
 		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		;
 const execute = async(interaction) => {
 		

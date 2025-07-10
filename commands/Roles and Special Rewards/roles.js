@@ -1,10 +1,12 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { get_roles } from '../../Database/roles_queries.js';
 import { get_role } from '../../index.js';
 
 const data = new SlashCommandBuilder()
 		.setName('roles')
-		.setDescription('visualiza todos los roles que tienen recompenzas');
+		.setDescription('visualiza todos los roles que tienen recompenzas')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		;
 const execute = async(interaction) => {
 	await interaction.deferReply();
 	const server_id = interaction.guild.id;

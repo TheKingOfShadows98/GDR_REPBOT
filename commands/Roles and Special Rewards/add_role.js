@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { set_role_reward } from '../../Database/roles_queries.js';
 import { add_newLog } from '../../Database/logs_queries.js';
 
@@ -14,6 +14,7 @@ const data = new SlashCommandBuilder()
 			.setDescription("Amount of credits for this role")
 			.setRequired(true)
 		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		;
 const execute = async(interaction) => {
 		await interaction.deferReply();

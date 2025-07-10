@@ -1,4 +1,4 @@
-import {SlashCommandBuilder} from 'discord.js';
+import {SlashCommandBuilder, PermissionFlagsBits} from 'discord.js';
 import { set_settings} from '../../Database/server_settings_queries.js';
 import { add_newLog } from '../../Database/logs_queries.js';
 
@@ -11,7 +11,9 @@ const data = new SlashCommandBuilder()
 			.setDescription('The number of initial credits for users')
 			.setRequired(true)
 			.setMinValue(0)
-		);
+		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		;
 const execute = async(interaction) => {
 		// build Settings
 		const settings = {}

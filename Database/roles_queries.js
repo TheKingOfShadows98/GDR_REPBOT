@@ -46,7 +46,7 @@ async function exist_role(server_id, role_id){
     server_id = ${server_id} AND role_id = ${role_id}
     LIMIT 1
     `;
-    return query > 0;
+    return query.length > 0;
 }
 
 export async function add_role(server_id, role_id, role_name, reward){
